@@ -49,7 +49,7 @@ def lancer_editeur(nom_fichier = None):
 			elif evenement.key == TOUCHE_SUPPR:
 				editeur.supprimer_case()
 
-			elif evenement.key == TOUCHE_MOINS:
+			elif evenement.key == TOUCHE_SHIFT_GAUCHE or evenement.key == TOUCHE_SHIFT_DROIT:
 				editeur.evoluer_curseur()
 
 			elif evenement.key == TOUCHE_TABULATION:
@@ -59,8 +59,8 @@ def lancer_editeur(nom_fichier = None):
 										KMOD_CTRL:
 				if editeur.carte.fin == POS_INTERDITE or\
 				editeur.carte.perso.position == POS_INTERDITE:
-					print 'erreur : il manque le personnage ou\
-la carte.'
+					print('erreur : il manque le personnage ou\
+la carte.')
 				else:
 					enregistrer_carte(editeur.carte,\
 						raw_input('fichier :'))

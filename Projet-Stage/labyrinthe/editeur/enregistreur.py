@@ -8,11 +8,11 @@ def enregistrer_carte(carte, nom_fichier = ''):
 	else:
 		with open(CHEMIN + nom_fichier,'w') as fichier:
 			informations = {'cases':carte.carte,
-						'perso':[carte.perso.position.c,
-						 carte.perso.position.l,
+						'perso':[carte.perso.position.l,
+						 carte.perso.position.c,
 						 carte.perso.dir],
-						'fin':[carte.fin.c,
-						 carte.fin.l]}
+						'fin':[carte.fin.l,
+						 carte.fin.c]}
 			json.dump(informations, fichier)
 			
 def charger_carte(nom_fichier = ''):
@@ -24,9 +24,9 @@ def charger_carte(nom_fichier = ''):
 			fichier = open(CHEMIN + nom_fichier, 'r')
 			informations = json.load(fichier)
 			carte.carte = informations['cases']
-			carte.perso.position.c, carte.perso.position.l,\
+			carte.perso.position.l, carte.perso.position.c,\
 				carte.perso.dir = tuple(informations['perso'])
-			carte.fin.c, carte.fin.l = tuple(informations['fin'])
+			carte.fin.l, carte.fin.c = tuple(informations['fin'])
 			fichier.close()
 			return carte
 		except IOError:

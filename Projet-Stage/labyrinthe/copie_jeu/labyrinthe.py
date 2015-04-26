@@ -5,9 +5,9 @@ from jeu import Jeu
 from dessin import *
 from constantes import *
 
-def lancement():
+def lancement(nom_fichier = 'carte.json'):
 	initialiser()
-	jeu = Jeu(DOSSIER + 'carte.json')
+	jeu = Jeu(DOSSIER + nom_fichier)
 	fenetre = Fenetre(jeu.cases)
 
 	def deplacer_perso(fenetre, jeu):
@@ -47,4 +47,8 @@ def lancement():
 	quitter()
 
 if __name__ == '__main__':
-	lancement()
+	import sys
+	if len(sys.argv) == 2:
+		lancement(sys.argv[1])
+	else:
+		lancement()

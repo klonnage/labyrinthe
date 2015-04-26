@@ -11,7 +11,7 @@ BAS = 2
 HAUT = 3
 
 SOLS = pygame.image.load(CHEMIN + 'textures.png')
-PERSONNAGE = pygame.image.load(CHEMIN + 'spritesPerso.png')
+PERSONNAGE = pygame.image.load(CHEMIN + 'red.png')
 
 LARGEUR = 50
 
