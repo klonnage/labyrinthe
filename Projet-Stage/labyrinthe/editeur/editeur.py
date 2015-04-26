@@ -12,7 +12,7 @@ class Editeur:
 		else:
 			self.carte = charger_carte(argument[0])
 		self.dimension = self.carte.dimension
-		self.curseur = Position()
+		self.curseur = Position(1, 1)
 		self.tuile_courante = ID_SOL
 		self.tuiles = None
 	
@@ -49,5 +49,5 @@ class Editeur:
 		self.carte.supprimer_tuile(self.curseur)
 
 	def deplacer_curseur(self, direction):
-		self.curseur.l = (self.curseur.l + direction.l) % (self.dimension.l)
-		self.curseur.c = (self.curseur.c + direction.c) % (self.dimension.c)
+		self.curseur.l = (self.curseur.l + direction.l - 1) % (self.dimension.l - 2) + 1
+		self.curseur.c = ((self.curseur.c + direction.c - 1) % (self.dimension.c - 2)) + 1

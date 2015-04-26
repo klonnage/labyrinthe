@@ -1,3 +1,5 @@
+#! /usr/bin/env python2
+
 from carte import *
 from api import *
 from constantes import *
