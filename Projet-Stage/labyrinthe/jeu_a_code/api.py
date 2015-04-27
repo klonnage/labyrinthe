@@ -1,53 +1,48 @@
 import pygame
 from pygame.locals import *
 from constantes import *
-from jeu import *
 
-ACTION_QUITTER = QUIT
-ACTION_CLAVIER = KEYDOWN
-
-TOUCHE_HAUT = K_UP
-TOUCHE_BAS = K_DOWN
-TOUCHE_GAUCHE = K_LEFT
-TOUCHE_DROITE = K_RIGHT
-TOUCHE_ECHAP = K_ESCAPE
-
+#creer la fenetre
+def creer_fenetre(colone, ligne):
+	return pygame.display.set_mode((colone, ligne))
+	
+#creer une police de caractere
+def creer_police(nom_police, taille):
+	return pygame.font.Font(nom_police, taille)
+	
+#renvoie la portion correspondant au personnage
+#dans sa direction de deplacement
+def obtenir_portion_perso(direction):
+	return PERSO_RECT[direction]
+	
+#creer un message a afficher a l'ecran
+def creer_message(message, police):
+	return police.render(message, True, pygame.Color(0, 0, 0))
+	
+#dessine a l'ecran
+def dessiner_ecran(fenetre, image, position, portion):
+	fenetre.blit(image, position, portion)
+	
+#fait une pause
+def pause(temps):
+	pygame.time.wait(int(temps * 100))
+	
+#affiche la fenetre
+def afficher_ecran():
+	pygame.display.flip()
+	
+#initialise pygame
 def initialiser():
+	#initialise le module pygame
 	pygame.init()
 	pygame.display.init()
 	pygame.font.init()
-	pygame.key.set_repeat(100, 10)
-
+	#fixe le delay entre chaque appuie sur une touche
+	pygame.key.set_repeat(100,10)
+	
+#quitte pygame
 def quitter():
+	#quitte pygame
 	pygame.font.quit()
 	pygame.display.quit()
 	pygame.quit()
-
-class Objet:
-	pass
-
-class Fenetre:
-	def __init__(self, cases):
-		self.display = pygame.display.set_mode(
-				(len(cases[0]) * COTE_CASE,
-				len(cases) * COTE_CASE))
-		self.font = pygame.font.Font(DOSSIER + 'Lighthouse_PersonalUse.ttf', 50)
-		self.dimension = Objet()
-		self.dimension.l, self.dimension.c =\
-			(len(cases),len(cases[0]))
-	def dessiner(self, image, position, portion):
-		y, x = position
-		position = x, y
-		self.display.blit(image, position, portion)
-	def ecrire(self, message):
-		self.display.blit(self.font.render(message, True, pygame.Color(0, 0, 0)),
-	((int((self.dimension.c-4)*COTE_CASE) / 2), 
-		int(self.dimension.l*COTE_CASE / 2 - 25)))
-	def afficher(self):
-		pygame.display.flip()
-
-def obtenir_action():
-	return pygame.event.wait()
-
-def pause(duree):
-	pygame.time.wait(int(duree * 1000))
