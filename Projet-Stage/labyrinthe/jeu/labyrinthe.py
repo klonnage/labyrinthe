@@ -1,3 +1,5 @@
+#! /usr/bin/env python2
+
 #Variables:
 
 carte = list()
@@ -9,30 +11,34 @@ game_continue = bool()
 event = None
 
 #Debut:
-import pygame, os, fonctions
+import pygame, os
+from api import *
+from fonctions import *
 from pygame.locals import *
 from constantes import *
+
+#initialise l'api
+initialiser()
+
+#creer la fenetre
+fenetre = creer_fenetre(6 * LARGEUR, 7 * LARGEUR)
+
+#initialise la carte
+carte = creer_carte()
+
+#creer le perso
+perso = creer_perso()
+
+#creer la fin
+fin = creer_fin()
 
 #condition pour que le jeu continue
 game_continue = True
 
-#initialise le module pygame
-pygame.init()
-pygame.display.init()
-pygame.font.init()
-
-#creer la fenetre
-fenetre = pygame.display.set_mode((10*LARGEUR,15*LARGEUR))
-
-#initialise la carte
-carte, perso, fin = fonctions.create_map(CHEMIN + 'carte')
-
-#fixe le delay entre chaque appuie sur une touche
-pygame.key.set_repeat(100,10)
 #tant que le jeu est en cours
 while game_continue:
 	#affiche la carte et le perso
-	fonctions.draw(fenetre,carte,perso,fin)
+	dessiner_tout(fenetre,carte,perso,fin)
 	
 	#on attend un evenement
 	event = pygame.event.wait()
@@ -48,60 +54,38 @@ while game_continue:
 			#fixe la direction du perso a la valeur de 'DROITE'
 			perso[2] = DROITE
 			
-			#on verifie qu'il n'y a rien pour pouvoir se
-			#deplacer
-			if not(fonctions.have_something(carte,perso)):
-				#deplace le perso sur la fenetre
-				fonctions.draw_move(fenetre,carte,perso,fin)
-				#deplace le perso sur la carte
-				fonctions.move(carte,perso)
+			#deplace le perso sur la carte
+			deplacer_perso(carte,perso)
 		#s'il appuie sur la touche 'Gauche'
 		elif event.key == K_LEFT:
 			#fixe la direction du perso a la valeur de 'GAUCHE'
 			perso[2] = GAUCHE
 			
-			#on verifie qu'il n'y a rien pour pouvoir se
-			#deplacer
-			if not(fonctions.have_something(carte,perso)):
-				#deplace le perso sur la fenetre
-				fonctions.draw_move(fenetre,carte,perso,fin)
-				#deplace le perso sur la carte
-				fonctions.move(carte,perso)
+			#deplace le perso sur la carte
+			deplacer_perso(carte,perso)
 		#s'il appuie sur la touche 'Bas'
 		elif event.key == K_DOWN:
 			#fixe la direction du perso a la valeur de 'BAS'
 			perso[2] = BAS
 			
-			#on verifie qu'il n'y a rien pour pouvoir se
-			#deplacer
-			if not(fonctions.have_something(carte,perso)):
-				#deplace le perso sur la fenetre
-				fonctions.draw_move(fenetre,carte,perso,fin)
-				#deplace le perso sur la carte
-				fonctions.move(carte,perso)
+			#deplace le perso sur la carte
+			deplacer_perso(carte,perso)
 		#s'il appuie sur la touche 'Haut'
 		elif event.key == K_UP:
 			#fixe la direction du perso a la valeur de 'HAUT'
 			perso[2] = HAUT
 			
-			#on verifie qu'il n'y a rien pour pouvoir se
-			#deplacer
-			if not(fonctions.have_something(carte,perso)):
-				#deplace le perso sur la fenetre
-				fonctions.draw_move(fenetre,carte,perso,fin)
-				#deplace le perso sur la carte
-				fonctions.move(carte,perso)
+			#deplace le perso sur la carte
+			deplacer_perso(carte,perso)
 		#s'il appuie sur la touche 'Echape'
 		elif event.key == K_ESCAPE:
 			game_continue = False
 	#si le perso est sur la case de fin
-	if fonctions.finish(perso,fin):
+	if est_arrivee(perso,fin):
 		#animation de fin du feu
-		fonctions.anim_fin(fenetre,carte,perso,fin)
+		anim_fin(fenetre,carte,perso,fin)
 		game_continue = False
-		pygame.time.wait(500)
+		pause(.5)
 		
-#quitte pygame
-pygame.font.quit()
-pygame.display.quit()
-pygame.quit()
+#quitte le programme
+quitter()
