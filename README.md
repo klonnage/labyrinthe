@@ -16,3 +16,4 @@ Si vous voulez jouer avec votre carte, ouvrez le fichier 'fonctions.py' dans 'Pr
 En esperant que le satge vous ait plu, et que vous vous amusiez bien.
 
 PS: je n'ai pas réussi à rajouter vos carte et vos images, j'en suis désolé.
+Mais je pourrais les rajouter samedi prochains.
